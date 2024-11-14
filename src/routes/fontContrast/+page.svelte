@@ -35,7 +35,7 @@
 <title>Font Contrast</title>
 
 <div class="flex-grow flex items-center justify-center p-4 overflow-auto bg-gray-200"> 
-    <div class=" h-fit md:h-5/6 w-full md:w-3/4 bg-white flex p-4 rounded-xl flex-col md:flex-row shadow-xl">
+    <div class=" h-fit md:h-5/6 w-full md:w-3/4 bg-white flex p-4 rounded-xl flex-col md:flex-row shadow-xl overflow-hidden">
         <div class="h-1/2 md:h-full w-full md:w-1/2 flex flex-col text-white justify-evenly p-4 rounded-xl border-gray-400 border" style="background-color: {bgColor}; color: {textColor};">
             <div class=" text-5xl md:text-7xl">Lorem ipsum dolor</div>
             <div class="text-xl md:text-3xl my-2.5">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
