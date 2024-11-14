@@ -25,7 +25,7 @@
 <div class="h-screen w-screen bg-[#000000bd] fixed left-0 top-0 flex items-center justify-center">
     <div class="h-3/4 w-4/5 bg-gray-100 rounded-lg flex flex-col items-center justify-start p-4" in:fly={{ y: 100, duration: 600 }}>
         <div class="h-fit w-full flex justify-between items-center">
-            <h2 class="text-2xl">Pallete Historic</h2>
+            <h2 class="text-2xl">Palette Historic</h2>
             <div class="flex">
                 <button class="h-10 w-10 bg-red-600 text-white p-2 rounded-md hover:bg-red-700 flex items-center justify-center mx-1" on:click={() => reset()}><i class="fas fa-trash"/></button>
                 <CloseBtn on:close={() => dispatch('close')}/>

@@ -7,7 +7,7 @@
     import CloseBtn from '../Buttons/CloseBtn.svelte';
     const dispatch = createEventDispatcher();
 
-    let palleteResult: Array<{ color: string, textColor: string }> = [];
+    let paletteResult: Array<{ color: string, textColor: string }> = [];
     let selectedImage: string | null = null;
     let colorsQtd: number = 0;
 
@@ -18,14 +18,14 @@
             const file = input.files[0];
             const reader = new FileReader();
             selectedImage = null;
-            palleteResult = [];
+            paletteResult = [];
             colorsQtd = 0;
             reader.onload = async () => {
                 selectedImage = reader.result as string;
                 try {
                     const colors = await extractColors(selectedImage);
                     colorsQtd = colors.length > 10 ? 10 : colors.length;
-                    palleteResult = colors.slice(0, colorsQtd).map(color => ({
+                    paletteResult = colors.slice(0, colorsQtd).map(color => ({
                         color: color.hex,
                         textColor: ColorUtils.getTextColor(color.hex)
                     }));
@@ -40,14 +40,14 @@
     // Dispatch the update with the selected palette.
     function updateColor() {
         dispatch('updateColor', {
-            palette: {colorQtd: colorsQtd, palette: palleteResult}
+            palette: {colorQtd: colorsQtd, palette: paletteResult}
         });
     }
 
     // Reset image upload
     function reset() {
         selectedImage = null;
-        palleteResult = [];
+        paletteResult = [];
     }
 
     // Handle drag over
@@ -73,7 +73,7 @@
         </div>
         <div class="h-px w-full bg-slate-500 my-2"></div>
         <div class="h-full w-full flex flex-col justify-around items-center overflow-y-auto p-4">
-            {#if palleteResult.length > 0}
+            {#if paletteResult.length > 0}
                 {#if selectedImage}
                     <img src={selectedImage} alt="Uploaded file showing colors" class="max-h-64 my-2" />
                 {/if}
@@ -85,7 +85,7 @@
                     <div class="h-px w-full bg-slate-500 my-2"></div>
                 </div>
                 <div class="w-full flex flex-wrap justify-between my-1">
-                    {#each palleteResult as color}
+                    {#each paletteResult as color}
                         <MiniColorCard item={color} colorQtd={colorsQtd}/>
                     {/each}
                 </div>

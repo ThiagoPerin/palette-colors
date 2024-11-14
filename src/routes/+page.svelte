@@ -12,7 +12,7 @@
 	let imageModal = false;
 	let saveAlert = false;
 	let colorQtd = 5;
-	let palleteResult = [] as Array<{color: string, textColor: string}>;
+	let paletteResult = [] as Array<{color: string, textColor: string}>;
 	let paletteHistoric = [] as Array<{colorQtd: number, datetime: string, palette: Array<{color: string, textColor: string}>}>;
 	let currentPaletteType = 'random'; // initial value
   
@@ -25,7 +25,7 @@
 	// Saves the most recent palette.
 	function savePalette() {
 		const date = new Date();
-		paletteHistoric.push({ colorQtd: colorQtd, datetime: date.toLocaleString(), palette: JSON.parse(JSON.stringify(palleteResult)) });
+		paletteHistoric.push({ colorQtd: colorQtd, datetime: date.toLocaleString(), palette: JSON.parse(JSON.stringify(paletteResult)) });
 		if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
 			localStorage.setItem('paletteHistoric', JSON.stringify(paletteHistoric));
 		}
@@ -44,24 +44,24 @@
 
 	// Generate a randon palette.
 	function generatePalette() {
-		palleteResult = [];
+		paletteResult = [];
 
 		switch (currentPaletteType) {
 			case 'monochromatic':
-				palleteResult = ColorUtils.getMonochromaticPalette(colorQtd, null);
+				paletteResult = ColorUtils.getMonochromaticPalette(colorQtd, null);
 				break;
 			case 'analogous':
-				palleteResult = ColorUtils.getAnalogousPalette(colorQtd);
+				paletteResult = ColorUtils.getAnalogousPalette(colorQtd);
 				break;
 			case 'triadic':
-				palleteResult = ColorUtils.getTriadicPalette(colorQtd);
+				paletteResult = ColorUtils.getTriadicPalette(colorQtd);
 				break;
 			case 'tetradic':
-				palleteResult = ColorUtils.getTetradicPalette(colorQtd);
+				paletteResult = ColorUtils.getTetradicPalette(colorQtd);
 				break;
 			default: // 'random'
 				for (let i = 0; i < colorQtd; i++) {
-					palleteResult.push(ColorUtils.getRandomColor());
+					paletteResult.push(ColorUtils.getRandomColor());
 				}
 				break;
 		}
@@ -72,10 +72,10 @@
 		const newQtd = event.detail;
 
 		if (newQtd < colorQtd) {
-			palleteResult.splice(newQtd);
+			paletteResult.splice(newQtd);
 		} else {
 			const additionalColors = generateAdditionalColors(currentPaletteType, newQtd).slice(-1);
-			palleteResult.push(...additionalColors.slice(-1));
+			paletteResult.push(...additionalColors.slice(-1));
 		}
 
 		colorQtd = newQtd;
@@ -85,7 +85,7 @@
 	function generateAdditionalColors(type: string, qtd: number) {
 		switch (type) {
 			case 'monochromatic':
-				return ColorUtils.getMonochromaticPalette(qtd, palleteResult[0]?.color);
+				return ColorUtils.getMonochromaticPalette(qtd, paletteResult[0]?.color);
 			case 'analogous':
 				return ColorUtils.getAnalogousPalette(qtd);
 			case 'triadic':
@@ -99,8 +99,8 @@
 
 	// Update the palette with another palette
 	function updateColor (event: { detail: { palette: { palette: { color: string; textColor: string; }[]; colorQtd: number; }; }; }) {
-		palleteResult = [];
-		palleteResult = JSON.parse(JSON.stringify(event.detail.palette.palette));
+		paletteResult = [];
+		paletteResult = JSON.parse(JSON.stringify(event.detail.palette.palette));
 		historicModal = false;
 		imageModal = false;
 		colorQtd = event.detail.palette.colorQtd;
@@ -108,8 +108,8 @@
 
 	// Upadte the palette with the custom color choosed.
 	function updateCardColor(event: {newColor: string}, index: number) {
-		palleteResult[index].color = event.newColor;
-		palleteResult[index].textColor = ColorUtils.getTextColor(event.newColor);
+		paletteResult[index].color = event.newColor;
+		paletteResult[index].textColor = ColorUtils.getTextColor(event.newColor);
 	}
 
 	// Hanlde the historic modal.
@@ -149,8 +149,8 @@
 		</div>
 	</div>
 	<div class="h-full w-full flex flex-wrap bg-gray-400">
-		{#key palleteResult}
-			{#each palleteResult as item, i}
+		{#key paletteResult}
+			{#each paletteResult as item, i}
 				<ColorCard item={item} index={i} colorQtd={colorQtd} on:changeColor={(event) => updateCardColor(event.detail, i)}/>
 			{/each}
 		{/key}
