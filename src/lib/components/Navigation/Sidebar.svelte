@@ -17,7 +17,7 @@
 
 	// Sets the initial value of the select based on the store.
 	onMount(() => {
-		selectedType = get(paletteType); // Pega o valor atual da store.
+		selectedType = get(paletteType);
 	});
 </script>
 
@@ -113,7 +113,7 @@
 		<a href="https://www.linkedin.com/in/thiagoperinfelipedacruz/">
 			<i class="fa-brands fa-linkedin mx-1"></i>
 		</a>
-		<a href="https://www.linkedin.com/in/thiagoperinfelipedacruz/">
+		<a href="https://github.com/ThiagoPerin/palette-colors.git/">
 			<i class="fa-brands fa-github mx-1"></i>
 		</a>
 	</div>
